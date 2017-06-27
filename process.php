@@ -41,11 +41,14 @@ if(isset($_POST['time'])) {
       {
 	$num = "{$row['no']}";
 	if(isset($_POST[$num])) {
-	  if(intval($row['answer']) == intval($_POST[$num])) {
+
+	  if($row['tag']==0 && intval($row['answer']) == intval($_POST[$num])) {
 	    $q = mysqli_query($DB,"UPDATE q{$quiz_id}_users SET score=score+1 WHERE id={$user_id}");
 	  }
-	  else {
-// 	    echo "{$row['no']} incorrect";
+	  else if($row['tag']==1){
+        $written_answer = htmlspecialchars($_POST[$num]);
+        $question = $row['question'];
+        $q = mysqli_query($DB,"UPDATE q{$quiz_id}_answers SET q{$num}=\"$question\" , a{$num}=\"$written_answer\" WHERE id={$user_id}");
 	  }
 	}
       }

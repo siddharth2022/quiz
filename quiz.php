@@ -104,7 +104,7 @@
 		  </div>
 		</div>
   </div>
-	<div class="timer nav navbar-nav navbar-right" style="margin-top:0px;color: #ffffff;">
+	<div class="timer nav navbar-nav navbar-right" style="margin-top:-19px;color: orange;font-size: 40px;">
 	  <span>Time &nbspleft :</span>
 	  <!--<span class="min" id="min"> </span>
 	  <span> : </span>
@@ -154,11 +154,12 @@
       while($ques = mysqli_fetch_assoc($get_ques)) {
     ?>
     <legend id="<?php echo "{$ques['no']}"?>" class=""></legend>
+
     <div class="jumbotron ques">
     <h3 >Question <?php echo "{$ques['no']}"?></h3>
     
 	  <p><?php echo "{$ques['question']}"; ?></p>
-
+<?php if($ques['tag']==0){ ?>
 	    <div class="radio">
 	      <label><input type="radio" value="1" name="<?php echo "{$ques['no']}"; ?>"><?php echo "{$ques['o1']}"; ?></label>
 	    </div>
@@ -170,9 +171,17 @@
 	    </div>
 	    <div class="radio">
 	      <label><input type="radio" value="4" name="<?php echo "{$ques['no']}"; ?>"><?php echo "{$ques['o4']}"; ?></label>
-	      
-            <div class="checkbox text-primary text-center">  <label><input type="checkbox"  name="<?php echo "cb_"."{$ques['no']}"; ?>" value="true">Mark for Review</label></div>
-	    </div>
+	      </div>
+
+      
+<?php }else if($ques['tag']==1){ ?>
+<div class="form-group">
+  <label for="comment">Answer:</label>
+  <textarea class="form-control" rows="5" name="<?php echo "{$ques['no']}"; ?>"></textarea>
+</div>
+<?php } ?>
+<div class="checkbox text-primary text-center">  <label><input type="checkbox"  name="<?php echo "cb_"."{$ques['no']}"; ?>" value="true">Mark for Review</label></div>
+	    
 	    </div>
   <hr>
   <?php
