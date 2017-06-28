@@ -172,7 +172,7 @@
 
     $table_name_answers = $table_name."_answers";
     echo $table_name_answers;
-    $create_table_answers = mysqli_query($DB,"CREATE TABLE {$table_name_answers} (id INT,score INT)");
+    $create_table_answers = mysqli_query($DB,"CREATE TABLE {$table_name_answers} (id INT AUTO_INCREMENT PRIMARY KEY,score INT DEFAULT 0)");
 
     
     

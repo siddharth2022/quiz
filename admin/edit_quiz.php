@@ -217,6 +217,7 @@ if(isset($_GET['action']))
   
   if($_GET['action']=="clear_questions") {
       $stmt = mysqli_query($DB,"TRUNCATE TABLE q{$_GET['id']}_main");
+      $stmt = mysqli_query($DB,"TRUNCATE TABLE q{$_GET['id']}_answers");
       echo "<meta http-equiv=\"refresh\" content=\"0;URL=?id={$_GET['id']}\">"; 
   }
   
@@ -242,7 +243,7 @@ if(isset($_GET['action']))
       echo "<meta http-equiv=\"refresh\" content=\"0;URL=edit_quiz.php?id={$_GET['id']}\">"; 
   }
 }
-
+//Update user data
 if(isset($_POST["users"]))
 {
 $file = $_FILES['user_file']['tmp_name'];
@@ -256,6 +257,7 @@ $username = $project."".$name;
 $password = password();
 
 $sql = mysqli_query($DB,"INSERT INTO {$qx}_users (fname, lname,username, password) VALUES ('$name','$project','$username','$password')");
+$sql = mysqli_query($DB,"INSERT INTO {$qx}_answers (score) VALUES (0)");
 $c = $c + 1;
 }
 
@@ -266,7 +268,7 @@ echo "<div class='alert alert-danger'><a href=\"#\" class=\"close\" data-dismiss
 }
 
 }
-
+//Update questions
 if(isset($_POST["questions"]))
 {
 $file = $_FILES['ques_file']['tmp_name'];
@@ -286,7 +288,7 @@ $project = intval($project);
 $sql = mysqli_query($DB,"INSERT INTO {$qx}_main (no,question,o1,o2,o3,o4,answer,tag) VALUES ($no,'$name','$o1','$o2','$o3','$o4',$project,$tag)");
 if($tag == 1)
 {
-	$sub2 = mysqli_query($DB,"ALTER TABLE {$qx}_answers ADD a{$no} TEXT NOT NULL");
+	$sub2 = mysqli_query($DB,"ALTER TABLE {$qx}_answers ADD a{$no} TEXT ");
 }
 $c = $c + 1;
 }

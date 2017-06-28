@@ -49,6 +49,7 @@ if(isset($_POST['time'])) {
         $written_answer = htmlspecialchars($_POST[$num]);
         $question = $row['question'];
         $q = mysqli_query($DB,"UPDATE q{$quiz_id}_answers SET  a{$num}=\"$written_answer\" WHERE id={$user_id}");
+       
 	  }
 	}
       }
