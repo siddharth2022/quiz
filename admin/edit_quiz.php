@@ -212,6 +212,7 @@ if(isset($_GET['action']))
 {
   if($_GET['action']=="clear_users") {
       $stmt = mysqli_query($DB,"TRUNCATE TABLE q{$_GET['id']}_users");
+      $stmt = mysqli_query($DB,"TRUNCATE TABLE q{$_GET['id']}_answers");
       echo "<meta http-equiv=\"refresh\" content=\"0;URL=?id={$_GET['id']}\">"; 
   }
   

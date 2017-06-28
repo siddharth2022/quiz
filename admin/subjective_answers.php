@@ -115,7 +115,7 @@ function quiz_selected(id)
   
         </tr>
         <?php
-    $table_answers = "q{$_GET['id']}_answers";
+    
     $table_main = "q{$_GET['id']}_main";
 
     $get_result = mysqli_query($DB,"SELECT * FROM {$table_main} WHERE tag=1");
@@ -123,10 +123,11 @@ function quiz_selected(id)
     {
       echo "<tr><td><h4><strong>Q.{$row['no']}</strong></h4></td><td><h4><strong>{$row['question']}</strong></h4></td></tr>";
       $col = "a{$row['no']}";
+      $table_answers = "q{$_GET['id']}_answers";
       $get_answers = mysqli_query($DB,"SELECT id,{$col} FROM {$table_answers} ");
       while($row_users = mysqli_fetch_row($get_answers))
       {
-        printf("<tr><td>id. %d</td><td>%s</td><td><input type=\"checkbox\" name=\"submission[]\" value=\"%d\"></td></tr>",$row_users[0],$row_users[1],$row_users[0]);
+        echo "<tr><td>id. {$row_users[0]}</td><td>{$row_users[1]}</td><td><input type=\"checkbox\" name=\"submission[]\" value=\"{$row_users[0]}\"></td></tr>";
       }
       
 
