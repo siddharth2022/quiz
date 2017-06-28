@@ -109,7 +109,7 @@ function quiz_selected(id)
   </div>
   <div class="row">
     <div class="col-xs-11"><br><Br>
-    <form method="post" oonsubmit="return confirm('Do you really want to submit the form?');">
+    <form method="post" onSubmit="return confirm('Do you really want to submit the form?');">
       <table class="table table-bordered">
         <tr>
   
