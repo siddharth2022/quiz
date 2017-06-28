@@ -1,4 +1,7 @@
-
+<?php
+  include("config.php");
+  session_Start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +17,7 @@
 <body>
 
 
-<?php
-  include("config.php");
-  session_Start();
-?>
+
 
 <?php
 
@@ -66,6 +66,11 @@
 	  <span class="glyphicon glyphicon-list-alt"></span> Have a look
 	</div>
 	</a>
+    <a href="subjective_answers.php">
+  <div class="menu-item">
+    <span class="glyphicon glyphicon-check"></span> Subjective Answers
+  </div>
+  </a>
 	<a href="logout.php">
 	<div class="menu-item">
 	  <span class="glyphicon glyphicon-off"></span> Logout
@@ -110,24 +115,29 @@
  /footer -->
     </div>
   </div>
-<!--   header end -->
+
 </div>
 
 </body>
 </html>
-
+<!--   header end -->
 
 <?php
-  if(isset($_POST['q_name'])) {
-    
+  if(isset($_POST['q_name'])) { 
+
+
     //give entry in master_table
-    $insert_master = $DB->prepare("INSERT INTO master (name,no_questions,duration) VALUES (?,?,?)");
+  //may not work if not provided table name
+
+    $insert_master = $DB->prepare("INSERT INTO master (name,no_questions,duration) VALUES(?,?,?)");
     
-    $insert_master->bind_param("sii",$name,$noques,$duration);
+    
     $name=$_POST['q_name'];
     $noques=$_POST['q_noques'];
     $duration=$_POST['q_duration'];
+  
     
+    $insert_master->bind_param("sii",$name,$noques,$duration);
     $insert_master->execute();
     $insert_master->close();
     //create seperate table
@@ -150,14 +160,27 @@
       
     
     $table_name_main = $table_name."_main";
-    $create_table_main = $DB->prepare("CREATE TABLE {$table_name_main} (no INT, question TEXT, o1 TEXT, o2 TEXT, o3 TEXT, o4 TEXT, answer INT)");
-    $create_table_main->execute();
-    $create_table_main->close();
+
+ //   $create_table_main = $DB->prepare("CREATE TABLE ? (no INT, question TEXT, o1 TEXT, o2 TEXT, o3 TEXT, o4 TEXT, answer INT,tag INT)");
+  //  $create_table_main->bind_param("s",$table_name_main);
+   // $create_table_main->execute();
+   // $create_table_main->close();
+
+    $create_table_main=mysqli_query($DB,"CREATE TABLE {$table_name_main} (no INT, question TEXT, o1 TEXT, o2 TEXT, o3 TEXT, o4 TEXT, answer INT ,tag INT)");
+
+    //Creating answers table
+
+    $table_name_answers = $table_name."_answers";
+    echo $table_name_answers;
+    $create_table_answers = mysqli_query($DB,"CREATE TABLE {$table_name_answers} (id INT,score INT)");
+
+    
     
     $table_name_users = $table_name."_users";
-    $create_table_users = $DB->prepare("CREATE TABLE {$table_name_users} (id INT AUTO_INCREMENT PRIMARY KEY, fname TEXT, lname TEXT, username TEXT, password TEXT, start_time INT DEFAULT NULL, time_taken INT DEFAULT NULL, finished INT DEFAULT 0, score INT DEFAULT 0)");
-    $create_table_users->execute();
-    $create_table_users->close();
+    $create_table_users = mysqli_query($DB,"CREATE TABLE {$table_name_users} (id INT AUTO_INCREMENT PRIMARY KEY, fname TEXT, lname TEXT, username TEXT, password TEXT, start_time INT DEFAULT NULL, time_taken INT DEFAULT NULL, finished INT DEFAULT 0, score INT DEFAULT 0)");
+    //$create_table_users->execute();
+    //$create_table_users->close();
+
     
     echo "<meta http-equiv=\"refresh\" content=\"0;URL=edit_quiz.php?id={$new_id}\">";
   }

@@ -71,6 +71,11 @@ function quiz_selected(id)
 	  <span class="glyphicon glyphicon-list-alt"></span> Have a look
 	</div>
 	</a>
+	    <a href="subjective_answers.php">
+  <div class="menu-item">
+    <span class="glyphicon glyphicon-check"></span> Subjective Answers
+  </div>
+  </a>
 	<a href="logout.php">
 	<div class="menu-item">
 	  <span class="glyphicon glyphicon-off"></span> Logout
@@ -110,6 +115,7 @@ function quiz_selected(id)
 	      </tr>
 	      <?php
 		$table = "q{$_GET['id']}_users";
+		$table_answers = "q{$_GET['id']}_answers";
 		$get_result = mysqli_prepare($DB,"SELECT id,fname,lname,score FROM {$table} WHERE 1 ORDER BY score DESC, time_taken ASC");
 
 // 		mysqli_stmt_bind_param($get_result,'s',$table);
@@ -117,6 +123,7 @@ function quiz_selected(id)
 		mysqli_stmt_execute($get_result);
 		mysqli_stmt_bind_result($get_result,$id,$fname,$lname,$score);
 		while(mysqli_stmt_fetch($get_result)) {
+			
 		  echo "<tr><td>{$i}</td><td>{$fname} {$lname}</td><td>{$score}</td></tr>";
 		  $i+=1;
 		}

@@ -88,6 +88,11 @@ function quiz_selected(id)
 	  <span class="glyphicon glyphicon-list-alt"></span> Have a look
 	</div>
 	</a>
+	    <a href="subjective_answers.php">
+  <div class="menu-item">
+    <span class="glyphicon glyphicon-check"></span> Subjective Answers
+  </div>
+  </a>
 	<a href="logout.php">
 	<div class="menu-item">
 	  <span class="glyphicon glyphicon-off"></span> Logout

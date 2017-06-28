@@ -83,6 +83,11 @@ session_start();
 	  <span class="glyphicon glyphicon-list-alt"></span> Have a look
 	</div>
 	</a>
+	    <a href="subjective_answers.php">
+  <div class="menu-item">
+    <span class="glyphicon glyphicon-check"></span> Subjective Answers
+  </div>
+  </a>
 	<a href="logout.php">
 	<div class="menu-item">
 	  <span class="glyphicon glyphicon-off"></span> Logout
@@ -195,14 +200,14 @@ function password() {
     }
     return implode($pass);
   }
-
+/*
 $hostname = "localhost";
 $username = "root";
-$password = "root";
+$password = "bhargav";
 $database = "quiz_master";
 $conn = mysql_connect("$hostname","$username","$password") or die(mysql_error());
 mysql_select_db("$database", $conn) or die(mysql_error());
-
+*/
 if(isset($_GET['action']))
 {
   if($_GET['action']=="clear_users") {
@@ -250,7 +255,7 @@ $project = $filesop[1];
 $username = $project."".$name;
 $password = password();
 
-$sql = mysql_query("INSERT INTO {$qx}_users (fname, lname,username, password) VALUES ('$name','$project','$username','$password')");
+$sql = mysqli_query($DB,"INSERT INTO {$qx}_users (fname, lname,username, password) VALUES ('$name','$project','$username','$password')");
 $c = $c + 1;
 }
 
@@ -276,8 +281,13 @@ $o1 = $filesop[2];
 $o2 = $filesop[3];
 $o3 = $filesop[4];
 $o4 = $filesop[5];
+$tag = $filesop[7];
 $project = intval($project);
-$sql = mysql_query("INSERT INTO {$qx}_main (no,question,o1,o2,o3,o4,answer) VALUES ($no,'$name','$o1','$o2','$o3','$o4',$project)");
+$sql = mysqli_query($DB,"INSERT INTO {$qx}_main (no,question,o1,o2,o3,o4,answer,tag) VALUES ($no,'$name','$o1','$o2','$o3','$o4',$project,$tag)");
+if($tag == 1)
+{
+	$sub2 = mysqli_query($DB,"ALTER TABLE {$qx}_answers ADD a{$no} TEXT NOT NULL");
+}
 $c = $c + 1;
 }
 
@@ -352,6 +362,7 @@ echo "<div class='alert alert-danger'><a href=\"#\" class=\"close\" data-dismiss
 			      </div>
 			    </div>
 			    <br>
+			    <?php if($row['tag']==0) { ?>
 			    <div class="row">
 			      <?php if($row['answer']==1) {echo "<b>";}?><div class="col-xs-3">1. <?php echo $row['o1'];?></div><?php if($row['answer']==1) {echo "</b>";}?>
 			      
@@ -361,6 +372,7 @@ echo "<div class='alert alert-danger'><a href=\"#\" class=\"close\" data-dismiss
 			      
 			      <?php if($row['answer']==4) {echo "<b>";}?><div class="col-xs-3">1. <?php echo $row['o4'];?></div><?php if($row['answer']==4) {echo "</b>";}?>
 			    </div>
+			    <?php } ?>
 			  </div>
 			</td>
 		      </tr>

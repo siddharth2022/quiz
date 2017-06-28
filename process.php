@@ -48,7 +48,7 @@ if(isset($_POST['time'])) {
 	  else if($row['tag']==1){
         $written_answer = htmlspecialchars($_POST[$num]);
         $question = $row['question'];
-        $q = mysqli_query($DB,"UPDATE q{$quiz_id}_answers SET q{$num}=\"$question\" , a{$num}=\"$written_answer\" WHERE id={$user_id}");
+        $q = mysqli_query($DB,"UPDATE q{$quiz_id}_answers SET  a{$num}=\"$written_answer\" WHERE id={$user_id}");
 	  }
 	}
       }
